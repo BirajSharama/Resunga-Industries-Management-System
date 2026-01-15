@@ -24,6 +24,9 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         AdminController.load(jTable1);
         loadEmployees();
+        setupInventoryRowSelection();
+        makeInventoryTableReadOnly();
+        makeEmployeesTableReadOnly();
     }
 
     /**
@@ -72,16 +75,19 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 153, 51));
         jLabel11.setText("Inventory Management System");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Top Selling ");
 
-        jLabel6.setText("Name");
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel6.setText("Flex Roll");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setText("Total Sales");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("0");
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel8.setText("1000000+ units sold");
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton6.setText("Log Out");
@@ -104,29 +110,30 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel11))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel6))
-                    .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton6)
                 .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -138,7 +145,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Home", jPanel2);
@@ -261,6 +270,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel9.setText("Inventory List");
 
         jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -298,6 +312,11 @@ public class MainFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Inventory List", jPanel4);
 
         jButton2.setText("Add");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Update");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -368,11 +387,31 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void makeEmployeesTableReadOnly() {
+    jTable2.setDefaultEditor(Object.class, null);
+}
+
+private void setupInventoryRowSelection() {
+    jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int row = jTable1.getSelectedRow();
+            if (row >= 0) {
+                jTextField2.setText(jTable1.getValueAt(row, 1).toString()); // Name
+                jTextField1.setText(jTable1.getValueAt(row, 2).toString()); // Quantity
+                jTextField3.setText(jTable1.getValueAt(row, 3).toString()); // Supplier
+            }
+        }
+    });
+}
+private void makeInventoryTableReadOnly() {
+    jTable1.setDefaultEditor(Object.class, null);
+}
 
     private void loadEmployees() {
         javax.swing.table.DefaultTableModel model =
@@ -400,7 +439,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        jTextField1.setText("");
+    jTextField2.setText("");
+    jTextField3.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -426,12 +467,89 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+       int row = jTable2.getSelectedRow();
+
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Select an employee to update");
+        return;
+    }
+
+    String email = javax.swing.JOptionPane.showInputDialog(this, "Enter new email:");
+    if (email == null || email.trim().isEmpty()) {
+        return;
+    }
+
+    if (!email.contains("@")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Invalid email");
+        return;
+    }
+
+    String password = javax.swing.JOptionPane.showInputDialog(this, "Enter new password:");
+    if (password == null || password.trim().isEmpty()) {
+        return;
+    }
+
+    // Update table values
+    jTable2.setValueAt(email, row, 1); // Name
+    jTable2.setValueAt(email, row, 2); // Gmail
+    jTable2.setValueAt(password, row, 3); // Password
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Employee updated");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+     this.dispose();
+    new Login().setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = jTable2.getSelectedRow();
+
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Select an employee");
+        return;
+    }
+
+    String email = javax.swing.JOptionPane.showInputDialog(this, "New email:");
+    if (email == null || email.trim().isEmpty()) return;
+
+    String password = javax.swing.JOptionPane.showInputDialog(this, "New password:");
+    if (password == null || password.trim().isEmpty()) return;
+
+    jTable2.setValueAt(email, row, 1);
+    jTable2.setValueAt(email, row, 2);
+    jTable2.setValueAt(password, row, 3);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = jTable1.getSelectedRow();
+
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Select a row to update");
+        return;
+    }
+
+    String name = jTextField2.getText().trim();
+    String qtyText = jTextField1.getText().trim();
+    String supplier = jTextField3.getText().trim();
+
+    if (name.isEmpty() || qtyText.isEmpty() || supplier.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "All fields are required");
+        return;
+    }
+
+    int qty;
+    try {
+        qty = Integer.parseInt(qtyText);
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Invalid quantity");
+        return;
+    }
+
+    jTable1.setValueAt(name, row, 1);
+    jTable1.setValueAt(qty, row, 2);
+    jTable1.setValueAt(supplier, row, 3);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

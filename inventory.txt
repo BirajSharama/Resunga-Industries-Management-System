@@ -1,0 +1,5 @@
+3,Ink Solvent (CMYK Set),40,ColorChem Pvt Ltd
+4,Lamination Film,60,Sunshine Laminates
+2,Flex Roll 4x3 ft,85,Global Flex Suppliers
+5,Flex Roll 4x3 ft,85,Global Flex Suppliers
+1,Flex Roll 3x2 ft,113,Asian Flex Industries
